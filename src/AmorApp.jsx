@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AmorAcept } from "./AmorAcept";
 
 export const AmorApp = () => {
     const [showAcept, setShowAcept] = useState(false);
     const [position, setPosition] = useState({ top: 51.4, left: 57 });
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        // Detectar si el dispositivo es móvil
+        const checkIfMobile = () => {
+            if (window.innerWidth <= 768) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false);
+            }
+        };
+
+        // Comprobar cuando el componente se monte y cuando cambie el tamaño de la ventana
+        checkIfMobile();
+        window.addEventListener("resize", checkIfMobile);
+
+        return () => {
+            window.removeEventListener("resize", checkIfMobile);
+        };
+    }, []);
 
     const moveButton = () => {
-        const randomTop = Math.random() * 70 + 10; // Rango entre 0 y 80% para evitar que salga del viewport
-        const randomLeft = Math.random() * 70 + 10;
+
+        const safeRange = isMobile ? 50 : 70;
+        const randomTop = Math.random() * (safeRange - 10) + 10; // Rango entre 10 y 50% para móviles, entre 10 y 70% para escritorio
+        const randomLeft = Math.random() * (safeRange - 10) + 10;
         setPosition({ top: randomTop, left: randomLeft });
     };
 
