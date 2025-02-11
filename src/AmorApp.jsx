@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { AmorAcept } from "./AmorAcept";
 import { RptaSi } from "./RptaSi";
 import { RptaNo } from "./RptaNo";
+import { VideoYoutube } from "./videoYoutube";
+
 
 export const AmorApp = () => {
     const [showAcept, setShowAcept] = useState(false);
@@ -73,11 +75,13 @@ export const AmorApp = () => {
 
     return (
         <>
+     
             <div className="bg-custom">
+            
                 <h1 className="h1-fd">¿Quieres ser mi San Valentín?</h1>
                 {/* <img src="https://media1.giphy.com/media/bOQeC2SNniMNy/giphy.gif" /> */}
                 <img src="\sashi_love\images\gatossticker.webp" height="300px" />
-
+                
                 <div className="buttons-container">
                     <button className="button-yes" onClick={handleYesClick}>Sí, acepto =D</button>
                     <button className="button-no1" onClick={handleNoClick}>No</button>
