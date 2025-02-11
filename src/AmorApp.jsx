@@ -51,7 +51,7 @@ export const AmorApp = () => {
         <> 
         <div className="amor-container">
         <img src="https://media1.giphy.com/media/bOQeC2SNniMNy/giphy.gif" />
-            <h1>¿Quieres ser mi novia?</h1>
+            <h1>¿Quieres ser mi San Valentín?</h1>
 
             <button className="button-yes" onClick={handleYesClick}>Sí, acepto =D</button>
 
