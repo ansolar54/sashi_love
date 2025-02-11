@@ -24,7 +24,7 @@ body {
 
 /* FRIENDSHIP_DAY */
 .bg-custom {
-    background-image: url('./assets/fondo_cor.webp');
+    background-image: url('/images/fondo_cor.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
