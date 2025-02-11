@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { AmorAcept } from "./AmorAcept";
+import { RptaSi } from "./RptaSi";
+import { RptaNo } from "./RptaNo";
 
 export const AmorApp = () => {
     const [showAcept, setShowAcept] = useState(false);
+    const [showSi, setShowSi] = useState(false)
     const [position, setPosition] = useState({ top: 51.4, left: 57 });
     const [isMobile, setIsMobile] = useState(false);
+    const [redirectBack, setRedirectBack] = useState(false);
 
     useEffect(() => {
         // Detectar si el dispositivo es móvil
@@ -25,6 +29,13 @@ export const AmorApp = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (redirectBack) {
+            setShowAcept(false); 
+            setRedirectBack(false); 
+        }
+    }, [redirectBack]);
+
     const moveButton = () => {
 
         const safeRange = isMobile ? 50 : 70;
@@ -40,29 +51,56 @@ export const AmorApp = () => {
         // } else {
         //     alert("Está bien, tomaré tu tiempo 😅");
         // }
-        setShowAcept(true);
+        setShowSi(true);
     };
 
-    if (showAcept) {
-        return <AmorAcept />;
+    if (showSi) {
+        // return <AmorAcept />;
+        return <RptaSi />;
     }
 
+    const handleNoClick = () => {
+        setShowAcept(true);
+
+        setTimeout(() => {
+            setRedirectBack(true);
+        }, 3000); 
+    };
+
+     if (showAcept) {
+            return <RptaNo />;
+        }
+
     return (
-        <> 
-        <div className="amor-container">
-        <img src="https://media1.giphy.com/media/bOQeC2SNniMNy/giphy.gif" />
-            <h1>¿Quieres ser mi San Valentín?</h1>
+        <>
+            <div className="bg-custom">
+                <h1 className="h1-fd">¿Quieres ser mi San Valentín?</h1>
+                {/* <img src="https://media1.giphy.com/media/bOQeC2SNniMNy/giphy.gif" /> */}
+                <img src="src\assets\images\gatossticker.webp" height="300px" />
 
-            <button className="button-yes" onClick={handleYesClick}>Sí, acepto =D</button>
+                <div className="buttons-container">
+                    <button className="button-yes" onClick={handleYesClick}>Sí, acepto =D</button>
+                    <button className="button-no1" onClick={handleNoClick}>No</button>
+                </div>
 
-            <button
-                className="button-no"
-                style={{ top: `${position.top}%`, left: `${position.left}%` }}
-                onMouseEnter={moveButton}
-            >
-                No, ni soñando
-            </button>
-        </div></>
-       
+             </div>
+
+            {/* <div className="amor-container">
+                <img src="https://media1.giphy.com/media/bOQeC2SNniMNy/giphy.gif" />
+                <h1>¿Quieres ser mi San Valentín?</h1>
+
+                <button className="button-yes" onClick={handleYesClick}>Sí, acepto =D</button>
+
+                <button
+                    className="button-no"
+                    style={{ top: `${position.top}%`, left: `${position.left}%` }}
+                    onMouseEnter={moveButton}
+                >
+                    No, ni soñando
+                </button>
+            </div> */}
+
+        </>
+
     )
 }
