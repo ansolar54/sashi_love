@@ -8,4 +8,6 @@ export default defineConfig({
   build: {
     outDir: 'docs', // Cambia el nombre de la carpeta de salida
   },
+
+  base: '/sashi_love/', // Reemplaza con el nombre de tu repo en GitHub
 })
