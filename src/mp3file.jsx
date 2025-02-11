@@ -39,5 +39,5 @@ export const Mp3File = () => {
     }, []);
 
 
-    return <audio ref={audioRef} src="/EresTu.mp3" preload="auto" loop style={{ display: "none" }} />;
+    return <audio ref={audioRef} src="/sashi_love/EresTu.mp3" preload="auto" loop style={{ display: "none" }} />;
 };
