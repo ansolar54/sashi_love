@@ -1,110 +1,103 @@
 import { useEffect, useState } from "react";
-import { AmorAcept } from "./AmorAcept";
-import { RptaSi } from "./RptaSi";
-import { RptaNo } from "./RptaNo";
-import { VideoYoutube } from "./videoYoutube";
-
+import { RegaloCumple } from "./RegaloCumple";
 
 export const AmorApp = () => {
-    const [showAcept, setShowAcept] = useState(false);
-    const [showSi, setShowSi] = useState(false)
-    const [position, setPosition] = useState({ top: 51.4, left: 57 });
-    const [isMobile, setIsMobile] = useState(false);
-    const [redirectBack, setRedirectBack] = useState(false);
+
+    const targetDate = new Date("2026-05-23T00:00:00").getTime();
+
+    const [timeLeft, setTimeLeft] = useState("");
+    const [canOpen, setCanOpen] = useState(false);
+    const [openGift, setOpenGift] = useState(false);
 
     useEffect(() => {
-        // Detectar si el dispositivo es móvil
-        const checkIfMobile = () => {
-            if (window.innerWidth <= 768) {
-                setIsMobile(true);
-            } else {
-                setIsMobile(false);
+
+        const interval = setInterval(() => {
+
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance <= 0) {
+                setCanOpen(true);
+                setTimeLeft("¡Ya puedes abrir tu regalo!");
+                clearInterval(interval);
+                return;
             }
-        };
 
-        // Comprobar cuando el componente se monte y cuando cambie el tamaño de la ventana
-        checkIfMobile();
-        window.addEventListener("resize", checkIfMobile);
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        return () => {
-            window.removeEventListener("resize", checkIfMobile);
-        };
+            setTimeLeft(
+                `${days}d ${hours}h ${minutes}m ${seconds}s`
+            );
+
+        }, 1000);
+
+        return () => clearInterval(interval);
+
     }, []);
 
-    useEffect(() => {
-        if (redirectBack) {
-            setShowAcept(false); 
-            setRedirectBack(false); 
-        }
-    }, [redirectBack]);
-
-    const moveButton = () => {
-
-        const safeRange = isMobile ? 50 : 70;
-        const randomTop = Math.random() * (safeRange - 10) + 10; // Rango entre 10 y 50% para móviles, entre 10 y 70% para escritorio
-        const randomLeft = Math.random() * (safeRange - 10) + 10;
-        setPosition({ top: randomTop, left: randomLeft });
-    };
-
-    const handleYesClick = () => {
-        // const response = confirm("¿Estás segura?");
-        // if (response) {
-        //     alert("¡Me haces muy feliz! ❤");
-        // } else {
-        //     alert("Está bien, tomaré tu tiempo 😅");
-        // }
-        setShowSi(true);
-    };
-
-    if (showSi) {
-        // return <AmorAcept />;
-        return <RptaSi />;
+    if (openGift) {
+        return <RegaloCumple />;
     }
 
-    const handleNoClick = () => {
-        setShowAcept(true);
-
-        setTimeout(() => {
-            setRedirectBack(true);
-        }, 3000); 
-    };
-
-     if (showAcept) {
-            return <RptaNo />;
-        }
-
     return (
-        <>
-     
-            <div className="bg-custom">
-            
-                <h1 className="h1-fd">¿Quieres ser mi San Valentín?</h1>
-                {/* <img src="https://media1.giphy.com/media/bOQeC2SNniMNy/giphy.gif" /> */}
-                <img src="\sashi_love\images\gatossticker.webp" height="300px" />
-                
-                <div className="buttons-container">
-                    <button className="button-yes" onClick={handleYesClick}>Sí, acepto =D</button>
-                    <button className="button-no1" onClick={handleNoClick}>No</button>
+        <div className="main-romantic">
+
+            <div className="overlay-romantic" />
+
+            <div className="floating-love">
+
+                <span>❤️</span>
+                <span>💚</span>
+                <span>😍</span>
+                <span>💕</span>
+                <span>🥰</span>
+                <span>💖</span>
+                <span>💘</span>
+                <span>❤️</span>
+                <span>😍</span>
+                <span>💚</span>
+                <span>💕</span>
+                <span>🥰</span>
+
+            </div>
+
+            <div className="content-romantic">
+                <h1 className="title-romantic neon-title">
+                    <span>❤️</span>
+                    <span>T</span>
+                    <span>E</span>
+
+                    <span className="space"></span>
+
+                    <span>A</span>
+                    <span>M</span>
+                    <span>O</span>                   
+                    <span>❤️</span>
+                </h1>
+
+                <p className="subtitle-romantic">
+                    Tengo un regalo especial para ti
+                </p>
+
+                <div className="countdown-box">
+                    {timeLeft}
                 </div>
 
-             </div>
-
-            {/* <div className="amor-container">
-                <img src="https://media1.giphy.com/media/bOQeC2SNniMNy/giphy.gif" />
-                <h1>¿Quieres ser mi San Valentín?</h1>
-
-                <button className="button-yes" onClick={handleYesClick}>Sí, acepto =D</button>
-
                 <button
-                    className="button-no"
-                    style={{ top: `${position.top}%`, left: `${position.left}%` }}
-                    onMouseEnter={moveButton}
+                    className={`gift-button ${!canOpen ? "disabled-btn" : ""}`}
+                    disabled={!canOpen}
+                    onClick={() => setOpenGift(true)}
                 >
-                    No, ni soñando
+                    {canOpen
+                        ? "Haz clic para abrir tu regalo 🎁"
+                        : "Aún no disponible"}
                 </button>
-            </div> */}
 
-        </>
+            </div>
 
-    )
-}
+        </div>
+    );
+};

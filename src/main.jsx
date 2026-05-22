@@ -7,6 +7,6 @@ import { Mp3File } from './mp3file.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
       <AmorApp />
-      <Mp3File />
+      {/* <Mp3File /> */}
   </React.StrictMode>,
 )
