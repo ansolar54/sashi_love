@@ -8,6 +8,7 @@ export const AmorApp = () => {
     const [timeLeft, setTimeLeft] = useState("");
     const [canOpen, setCanOpen] = useState(false);
     const [openGift, setOpenGift] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
 
@@ -37,6 +38,22 @@ export const AmorApp = () => {
         return () => clearInterval(interval);
 
     }, []);
+
+    const handleGiftClick = () => {
+
+        if (!canOpen) {
+
+            setShowPopup(true);
+
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 2500);
+
+            return;
+        }
+
+        setOpenGift(true);
+    };
 
     if (openGift) {
         return <RegaloCumple />;
@@ -74,7 +91,7 @@ export const AmorApp = () => {
 
                     <span>A</span>
                     <span>M</span>
-                    <span>O</span>                   
+                    <span>O</span>
                     <span>❤️</span>
                 </h1>
 
@@ -82,11 +99,19 @@ export const AmorApp = () => {
                     Tengo un regalo especial para ti
                 </p>
 
+                {/* <p className="subtitle-romantic">
+                    Estamos contando cada segundo para llegar al 23/05 ❤️
+                </p> */}
+
                 <div className="countdown-box">
                     {timeLeft}
                 </div>
 
-                <button
+                <p className="waiting-message">
+                    El regalo especial se desbloqueará exactamente el 23 de mayo a las 12:00 AM 💚
+                </p>
+
+                {/* <button
                     className={`gift-button ${!canOpen ? "disabled-btn" : ""}`}
                     disabled={!canOpen}
                     onClick={() => setOpenGift(true)}
@@ -94,8 +119,25 @@ export const AmorApp = () => {
                     {canOpen
                         ? "Haz clic para abrir tu regalo 🎁"
                         : "Aún no disponible"}
+                </button> */}
+
+                <button
+                    className={`gift-button ${!canOpen ? "disabled-btn" : ""}`}
+                    onClick={handleGiftClick}
+                >
+                    {canOpen
+                        ? "Haz clic para abrir tu regalo 🎁"
+                        : "Aún no disponible"}
                 </button>
 
+                {
+                    showPopup && (
+
+                        <div className="popup-message">
+                            ⏳ PACIENCIA, YA LLEGARÁ LA HORA 💚
+                        </div>
+                    )
+                }
             </div>
 
         </div>
